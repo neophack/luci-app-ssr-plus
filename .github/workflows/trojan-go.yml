@@ -49,7 +49,7 @@ jobs:
           
       - name: Update and Install Packages
         run: |
-          [ -e trojan-go ] && mv xray openwrt/package/trojan-go
+          [ -e trojan-go ] && mv trojan-go openwrt/package/trojan-go
           
           txt=$(cat openwrt/package/trojan-go/Makefile|tr '\n' ',')
           version=`echo $txt|sed -r 's/.*PKG_VERSION:=(.*),PKG_RELEASE.*/\1/'`
