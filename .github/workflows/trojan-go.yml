@@ -1,0 +1,97 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Trojan-go
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+  push:
+    paths:
+        - '.github/workflows/trojan-go.yml'
+        - 'trojan-go/Makefile'
+
+env:
+  SDK_NAME: openwrt-sdk-armvirt-64_gcc-8.4.0_musl.Linux-x86_64
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04         
+    env:
+        PACKAGE_NAME: trojan-go
+        CONFIG_PACKAGE_NAME: Trojan-go
+        
+    steps:
+      - uses: actions/checkout@v2
+                        
+      - name: Initialization Environment
+        run: |
+          sudo timedatectl set-timezone "$TZ"
+          sudo mkdir -p /workdir 
+          sudo chown $USER:$GROUPS /workdir
+ 
+      - name: Download SDK
+        working-directory: /workdir
+        run: |
+          version=$(curl -s "https://api.github.com/repos/mingxiaoyu/N1Openwrt/releases/latest" | awk -F '"' '/tag_name/{print $4}')
+          wget  https://github.com/mingxiaoyu/N1Openwrt/releases/download/$version/$SDK_NAME.tar.xz
+          tar xvJf  $SDK_NAME.tar.xz
+          mv  $SDK_NAME openwrt
+          rm -rf $SDK_NAME.tar.xz
+          ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+          echo "SDK_HOME=$GITHUB_WORKSPACE/openwrt" >> $GITHUB_ENV
+      - name: Make config 
+        run: |
+          cd openwrt
+          cat > .config << EOF
+          CONFIG_PACKAGE_${CONFIG_PACKAGE_NAME}=y
+          EOF
+          
+      - name: Update and Install Packages
+        run: |
+          [ -e trojan-go ] && mv xray openwrt/package/trojan-go
+          
+          txt=$(cat openwrt/package/trojan-go/Makefile|tr '\n' ',')
+          version=`echo $txt|sed -r 's/.*PKG_VERSION:=(.*),PKG_RELEASE.*/\1/'`
+          echo "------------------"
+          echo $version
+          echo "version=trojan-go$version"  >> $GITHUB_ENV  
+          
+          cd openwrt
+          
+          ./scripts/feeds update -a >/dev/null 2>&1
+          ./scripts/feeds install -a >/dev/null 2>&1
+          
+           make defconfig >/dev/null 2>&1
+          
+      - name: Build Packages
+        run: |
+          cd openwrt
+          make package/${PACKAGE_NAME}/{clean,compile} V=s
+      - name: Copy Bin Files
+        run: |
+          find "$SDK_HOME/bin/" -type f -name "${PACKAGE_NAME}*.ipk" -exec cp {} "${{ github.workspace }}" \;
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          name: Xray ipk 
+          allowUpdates: true
+          tag: ${{ env.version }}
+          commit: main
+          token: ${{ secrets.GITHUB_TOKEN   }}
+          artifacts: "*.ipk"
+          
+      - name: Delete workflow runs
+        uses: GitRML/delete-workflow-runs@main
+        with:
+          repository: ${{ github.repository }}
+          retain_days: 30
+          keep_minimum_runs: 6
+
+      - name: Remove old Releases
+        uses: dev-drprasad/delete-older-releases@v0.1.0
+        with:
+          keep_latest: 3
+          delete_tags: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
