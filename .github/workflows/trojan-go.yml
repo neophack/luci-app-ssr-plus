@@ -74,7 +74,7 @@ jobs:
       - name: Release
         uses: ncipollo/release-action@v1
         with:
-          name: Xray ipk 
+          name: Trojan-go ipk 
           allowUpdates: true
           tag: ${{ env.version }}
           commit: main
