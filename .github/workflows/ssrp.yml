@@ -27,8 +27,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - package_name: trojan-go
-            config_package_name: Trojan-go
           - package_name: xray
             config_package_name: Xray
           - package_name: trojan
@@ -37,8 +35,8 @@ jobs:
             config_package_name: V2ray_plugin
           - package_name: kcptun
             config_package_name: Kcptun
-          - package_name: redsocks2
-            config_package_name: Redsocks2
+          - package_name: ipt2socks-alt
+            config_package_name: Ipt2socks-alt
           - package_name: luci-app-ssr-plus
             config_package_name: luci-app-ssr-plus
             
@@ -77,9 +75,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray_plugin is not set
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray is not set
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan is not set
-          # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan-go is not set
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_NaiveProxy is not set
-          # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Redsocks2 is not set
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Kcptun is not set
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Server is not set
           EOF
@@ -110,15 +106,6 @@ jobs:
           popd 
            
           make defconfig >/dev/null 2>&1
-          
-      #- name: Trojan-go patches
-      #  if:  ${{ env.CONFIG_PACKAGE_NAME }} == 'trojan-go'
-      #  run: |
-      #    cd openwrt/package/helloworld/trojan-go
-      #    sudo mkdir -p  patches
-      #    cd patches
-      #    sudo wget https://raw.githubusercontent.com/mingxiaoyu/lede-ssr-plus/main/patches/0001-BinaryFrame.patch
-      #    ls
 
       - name: Build Packages
         run: |
