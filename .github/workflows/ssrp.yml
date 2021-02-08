@@ -27,16 +27,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - package_name: xray
-            config_package_name: Xray
+          - package_name: xray-core
+            config_package_name: Xray-core
           - package_name: trojan
             config_package_name: Trojan
           - package_name: v2ray-plugin
             config_package_name: V2ray_plugin
           - package_name: kcptun
             config_package_name: Kcptun
-          - package_name: ipt2socks-alt
-            config_package_name: Ipt2socks-alt
           - package_name: luci-app-ssr-plus
             config_package_name: luci-app-ssr-plus
             
