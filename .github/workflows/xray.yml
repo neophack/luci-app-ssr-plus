@@ -18,8 +18,8 @@ jobs:
   build:
     runs-on: ubuntu-18.04         
     env:
-        PACKAGE_NAME: xray
-        CONFIG_PACKAGE_NAME: Xray
+        PACKAGE_NAME: xray-core
+        CONFIG_PACKAGE_NAME: Xray-core
         
     steps:
       - uses: actions/checkout@v2
@@ -50,9 +50,9 @@ jobs:
           
       - name: Update and Install Packages
         run: |
-          [ -e xray ] && mv xray openwrt/package/xray
+          [ -e xray-core ] && mv xray-core openwrt/package/xray-core
           
-          txt=$(cat openwrt/package/xray/Makefile|tr '\n' ',')
+          txt=$(cat openwrt/package/xray-core/Makefile|tr '\n' ',')
           version=`echo $txt|sed -r 's/.*PKG_VERSION:=(.*),PKG_RELEASE.*/\1/'`
           echo "------------------"
           echo $version
