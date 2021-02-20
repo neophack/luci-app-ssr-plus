@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
   push:
     paths:
-        - '.github/workflows/n1.yml'
-        - 'xray/Makefile'
+        - '.github/workflows/xray.yml'
+        - 'xray-core/Makefile'
 
 env:
   SDK_NAME: openwrt-sdk-armvirt-64_gcc-8.4.0_musl.Linux-x86_64
