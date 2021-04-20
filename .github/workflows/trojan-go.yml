@@ -3,7 +3,6 @@
 name: Trojan-go
 
 on:
-  repository_dispatch:
   workflow_dispatch:
   push:
     paths:
@@ -80,13 +79,6 @@ jobs:
           commit: main
           token: ${{ secrets.GITHUB_TOKEN   }}
           artifacts: "*.ipk"
-          
-      - name: Delete workflow runs
-        uses: GitRML/delete-workflow-runs@main
-        with:
-          repository: ${{ github.repository }}
-          retain_days: 30
-          keep_minimum_runs: 6
 
       - name: Remove old Releases
         uses: dev-drprasad/delete-older-releases@v0.1.0
