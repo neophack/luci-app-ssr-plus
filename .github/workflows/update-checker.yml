@@ -17,6 +17,12 @@ env:
 
 on:
   workflow_dispatch:
+    inputs:
+      update:
+        description: 'Force update'
+        required: false
+        default: 'false'
+        
   schedule:
     - cron: 0 */18 * * *
 
@@ -43,10 +49,10 @@ jobs:
       run: |
         echo ${{ steps.getHash.outputs.commitHash }} | tee .commitHash
     - name: Trigger build
-      if: steps.cacheHash.outputs.cache-hit != 'true'
+      if: steps.cacheHash.outputs.cache-hit != 'true' || (github.event.inputs.update == 'true' && github.event.inputs.update  != 'false') 
       uses: peter-evans/repository-dispatch@v1
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.ACTIONS_TRIGGER_PAT }}
         event-type: Source Code Update
 
     - name: Delete workflow runs
