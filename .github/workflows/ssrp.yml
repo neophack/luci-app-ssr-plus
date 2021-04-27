@@ -26,6 +26,8 @@ jobs:
             config_package_name: V2ray_plugin
           - package_name: kcptun
             config_package_name: Kcptun
+          - package_name: naiveproxy
+            config_package_name: naiveproxy
           - package_name: luci-app-ssr-plus
             config_package_name: luci-app-ssr-plus
             
