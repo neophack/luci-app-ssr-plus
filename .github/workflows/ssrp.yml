@@ -28,6 +28,8 @@ jobs:
             config_package_name: Kcptun
           - package_name: naiveproxy
             config_package_name: naiveproxy
+          - package_name: shadowsocks-rust
+            config_package_name: shadowsocks-rust-sslocal
           - package_name: luci-app-ssr-plus
             config_package_name: luci-app-ssr-plus
             
