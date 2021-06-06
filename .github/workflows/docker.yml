@@ -55,15 +55,15 @@ jobs:
           git clone --depth=1 https://github.com/lisaac/luci-lib-docker
           popd
           
-          echo "version=dockerlatest"  >> $GITHUB_ENV 
-          sed -i ':a;N;s|+docker \\\n\t+dockerd|+docker-ce|g;ta' package/luci-app-dockerman/Makefile
-          txt=$(cat package/luci-app-dockerman/Makefile)
-          echo $txt
-
           ./scripts/feeds update -a >/dev/null 2>&1
           ./scripts/feeds install -a >/dev/null 2>&1
           
-           make defconfig >/dev/null 2>&1
+          echo "version=dockerlatest"  >> $GITHUB_ENV 
+          [ -e feeds/packages/utils/docker-ce ] && sed -i ':a;N;s|+docker \\\n\t+dockerd|+docker-ce|g;ta' package/luci-app-dockerman/Makefile
+          txt=$(cat package/luci-app-dockerman/Makefile)
+          echo $txt
+          
+          make defconfig >/dev/null 2>&1
           
       - name: Build Packages
         run: |
