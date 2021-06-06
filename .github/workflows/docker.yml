@@ -56,7 +56,7 @@ jobs:
           popd
           
           echo "version=dockerlatest"  >> $GITHUB_ENV 
-          [ -e feeds/packages/utils/docker-ce ] && sed -i ':a;N;s|+docker \\\n\t+dockerd|+docker-ce|g;ta' package/luci-app-dockerman/Makefile
+          sed -i ':a;N;s|+docker \\\n\t+dockerd|+docker-ce|g;ta' package/luci-app-dockerman/Makefile
           txt=$(cat package/luci-app-dockerman/Makefile)
           echo $txt
 
