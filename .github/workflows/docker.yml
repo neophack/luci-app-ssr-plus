@@ -52,7 +52,7 @@ jobs:
           svn co https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman package/luci-app-dockerman
           mkdir package/community
           pushd package/community
-          git clone --depth=1 https://github.com/lisaac/luci-app-dockerman
+          git clone --depth=1 https://github.com/lisaac/luci-lib-docker
           popd
           
           txt=$(cat package/luci-app-dockerman/Makefile|tr '\n' ',')
