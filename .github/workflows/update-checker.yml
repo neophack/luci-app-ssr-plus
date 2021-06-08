@@ -24,7 +24,7 @@ on:
         default: 'false'
         
   schedule:
-    - cron: 0 */18 * * *
+    - cron: 0 20 * * *
 
 jobs:
   check:
