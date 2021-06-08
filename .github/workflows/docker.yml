@@ -82,7 +82,7 @@ jobs:
           allowUpdates: true
           tag: ${{ env.version }}
           commit: main
-          token: ${{ secrets.GITHUB_TOKEN   }}
+          token: ${{ secrets.RELEASES_TOKEN   }}
           artifacts: "*.ipk"
 
       - name: Remove old Releases
@@ -91,5 +91,5 @@ jobs:
           keep_latest: 3
           delete_tags: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+          GITHUB_TOKEN: ${{ secrets.RELEASES_TOKEN }}  
           
