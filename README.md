@@ -1,5 +1,7 @@
-![Xray](https://github.com/roacn/lede-ssr-plus/workflows/Xray/badge.svg)
 ![SSRP](https://github.com/roacn/lede-ssr-plus/workflows/SSRP/badge.svg)
+![Xray](https://github.com/roacn/lede-ssr-plus/workflows/Xray/badge.svg)
+![Trojan-go](https://github.com/roacn/lede-ssr-plus/workflows/Trojan-go/badge.svg)
+![Docker](https://github.com/roacn/lede-ssr-plus/workflows/Docker/badge.svg)
 
 中文：通过openwrt-sdk-armvirt-64的SDK编译IPK，我个人用于Phicomm N1.理论上所有arm64的openwrt都可以使用
 # 如何安装ipk
