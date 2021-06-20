@@ -32,8 +32,8 @@ jobs:
       - name: Download SDK
         working-directory: /workdir
         run: |
-          version=$(curl -s "https://api.github.com/repos/mingxiaoyu/N1Openwrt/releases/latest" | awk -F '"' '/tag_name/{print $4}')
-          wget  https://github.com/mingxiaoyu/N1Openwrt/releases/download/$version/$SDK_NAME.tar.xz
+          version=$(curl -s "https://api.github.com/repos/roacn/Actions-OpenWrt-Lede-N1/releases/latest" | awk -F '"' '/tag_name/{print $4}')
+          wget  https://github.com/roacn/Actions-OpenWrt-Lede-N1/releases/download/$version/$SDK_NAME.tar.xz
           tar xvJf  $SDK_NAME.tar.xz
           mv  $SDK_NAME openwrt
           rm -rf $SDK_NAME.tar.xz
